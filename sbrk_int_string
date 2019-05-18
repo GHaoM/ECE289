@@ -1,0 +1,36 @@
+li $v0, 9           #allocate memory for new record
+li $a0, 344         #[334 = how much memory - in bytes]
+syscall
+
+move $s0, $v0       #store the address of our allocated memory in $s0
+
+li $v0, 5           #enter integer
+syscall
+sw $v0, 0($s0)      #store our ID into memory   Offset: 0
+
+li $v0, 5           #enter integer
+syscall
+sw $v0, 4($s0)      #store year into our memory Offset: 4
+
+li $v0, 8           #read our title into the allocated space
+la $a0, 8($s0)      #Offset: 8
+li $a1, 64
+syscall
+
+li $v0, 8           #read our description into the allocated space
+la $a0, 72($s0)     #Offset: 72
+li $a1, 256
+syscall 
+
+li $v0, 1           #Print the ID stored at $s0     [Offset: 0]
+lw $a0, 0($s0)
+syscall
+li $v0, 1           #Print the Year stored at $s0   [Offset: 4]
+lw $a0, 4($s0)
+syscall
+li $v0, 4           #Print the Title stored at $s0  [Offset: 8]
+la $a0, 8($s0)
+syscall
+li $v0, 4           #Print descript stored at $s0   [Offset: 72]
+la $a0, 72($s0)
+syscall
